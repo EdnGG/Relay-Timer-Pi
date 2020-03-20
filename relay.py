@@ -3,12 +3,20 @@ import RPi.GPIO as GPIO
 import time
 import datetime
 
+#  LED and Switch Button 
+LedPin = 17
+ButtonPin = 27
 
 # set GPIO numbering mode and define output pins
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(20, GPIO.OUT)
 GPIO.setup(26, GPIO.OUT)
 GPIO.setup(21, GPIO.OUT)
+
+#LED and Switch seccion
+GPIO.setup(LedPin, GPIO.OUT, initial=GPIO.LOW)
+GPIO.setup(ButtonPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+
 
 # cycle those relays
 
@@ -36,30 +44,30 @@ actuatorRelay2 = input("Please provide Act serial number for relay #2" + '\n')
 actuatorRelay3 = input("Please provide Act serial number for relay #3" + '\n')
 
 
-print("Welcome ",  name +'\n'+"Today is: " + str(formatDate) + '\n' + '\n')
+print('\n' + "Welcome ",  name + '\n'+ '\n' + "Today is: " + str(formatDate) + '\n' + '\n')
 
 
 try:
-    while cicles <= 10:
+    while cicles <= 3:
         GPIO.output(21, True)
         counter = counter + 1
         cicles = cicles + 1
         # print("Actuator on relay 1. Cicle #:" + str(counter) + '\n')
         print("Actuator number: "+ str(actuatorRelay1)+" On relay 1. Cicle #:" + str(counter) + '\n')
-        time.sleep(3)
+        time.sleep(10)
         GPIO.output(21, False)
-        time.sleep(3)
-        # GPIO.output(20, True)
-        # counter1 = counter1 + 1
-        # print("Actuator on relay 2. Cicle #:" + str(counter1) + '\n')
-        # time.sleep(3)
-        # GPIO.output(20, False)
-        # GPIO.output(26, True)
-        # counter2 = counter2 + 1
-        # print("Actuator on relay 3. Cicle #:" + str(counter2) + '\n')
-        # time.sleep(3)
-        # GPIO.output(26, False)
-
+        # time.sleep(10)
+        GPIO.output(20, True)
+        counter1 = counter1 + 1
+        print("Actuator number: "+ str(actuatorRelay2)+" On relay 1. Cicle #:" + str(counter) + '\n')
+        time.sleep(10)
+        GPIO.output(20, False)
+        GPIO.output(26, True)
+        counter2 = counter2 + 1
+        print("Actuator number: "+ str(actuatorRelay3)+" On relay 1. Cicle #:" + str(counter) + '\n')
+        time.sleep(10)
+        GPIO.output(26, False)
+        time.sleep(10)
 finally:
 
 
