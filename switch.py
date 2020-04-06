@@ -5,7 +5,7 @@ from time import sleep
 
 GPIO.setmode(GPIO.BCM)
 
-slleptime = .1
+sleeptime = .1
 
 #GPIO pin on the component
 lightPin = 17
