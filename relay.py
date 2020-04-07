@@ -48,14 +48,15 @@ try:
         counter = counter + 1
         counterCicles = counterCicles + 1
         print("Actuator number: "+ str(actuatorRelay1)+" On relay 1. Cicle #:" + str(counter) + '\n')
+        time.sleep(40)
         if GPIO.input(ButtonPin) == 0:
             print("Actuator reach the desire distance")
         else:
             print("Actuator dont reach the desire distance")
-        time.sleep(4)
+        time.sleep(10)
         print('getting ready for next cicle')
         GPIO.output(21, False)
-        time.sleep(4)
+        time.sleep(5)
 
 
 finally:
