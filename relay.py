@@ -37,8 +37,7 @@ name = input("Technichian name: ")
 
 # Getting actuators serial numbers
 actuatorRelay1 = input("Please provide Act serial number for relay #1" + '\n')
-actuatorRelay2 = input("Please provide Act serial number for relay #2" + '\n')
-actuatorRelay3 = input("Please provide Act serial number for relay #3" + '\n')
+
 
 
 print('\n' + "Welcome ",  name + '\n'+ '\n' + "Today is: " + str(formatDate) + '\n' + '\n')
@@ -54,38 +53,14 @@ try:
         else:
             print("Actuator dont reach the desire distance")
         time.sleep(4)
-        # print('waiting for next actuator number: ' + str(actuatorRelay2))
+        print('getting ready for next cicle')
         GPIO.output(21, False)
-        GPIO.output(20, True)
-        counter1 = counter1 + 1
-        print("Actuator number: "+ str(actuatorRelay2)+" On relay 2. Cicle #:" + str(counter) + '\n')
-        if GPIO.input(ButtonPin) == 0:
-            print("Actuator reach the desire distance")
-        else:
-            print("Actuator dont reach the desire distance")
-        time.sleep(4)
-        # print('waiting for next actuator number: ' + str(actuatorRelay3))
-        GPIO.output(20, False)
-        GPIO.output(26, True)
-        counter2 = counter2 + 1
-        print("Actuator number: "+ str(actuatorRelay3)+" On relay 3. Cicle #:" + str(counter) + '\n')
-        if GPIO.input(ButtonPin) == 0:
-            print("Actuator reach the desire distance")
-        else:
-            print("Actuator dont reach the desire distance")
-        time.sleep(4)
-        # print('sleeping till next actuator 3 ' + str(actuatorRelay1))
-        GPIO.output(26, False)
         time.sleep(4)
 
 
 finally:
-
-
-        # cleanup the GPIO before finishing :)
+    # cleanup the GPIO before finishing :)
     print("Actuator number "+str(actuatorRelay1)+" On relay #1 runs: " + str(counter) + " Cicles")
-    print("Actuator number "+str(actuatorRelay2)+" On relay #2 runs: " + str(counter1) + " Cicles")
-    print("Actuator number "+str(actuatorRelay3)+" On relay #3 runs: " + str(counter2) + " Cicles")
     GPIO.cleanup()
 
 
