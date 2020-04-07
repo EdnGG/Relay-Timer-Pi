@@ -9,12 +9,13 @@ ButtonPin = 27
 
 # set GPIO numbering mode and define output pins
 GPIO.setmode(GPIO.BCM)
+GPIO.setwarnings(False)
 GPIO.setup(20, GPIO.OUT)
 GPIO.setup(26, GPIO.OUT)
 GPIO.setup(21, GPIO.OUT)
 
 #LED and Switch seccion
-GPIO.setup(LedPin, GPIO.OUT, initial=GPIO.LOW)
+GPIO.setup(LedPin, GPIO.OUT, initial=GPIO.HIGH)
 GPIO.setup(ButtonPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
 
@@ -42,8 +43,6 @@ actuatorRelay3 = input("Please provide Act serial number for relay #3" + '\n')
 
 print('\n' + "Welcome ",  name + '\n'+ '\n' + "Today is: " + str(formatDate) + '\n' + '\n')
 
-# def start():
-
 try:
     while counterCicles <= 5:
         GPIO.output(21, True)     
@@ -55,6 +54,7 @@ try:
         else:
             print("Actuator dont reach the desire distance")
         time.sleep(4)
+        # print('waiting for next actuator number: ' + str(actuatorRelay2))
         GPIO.output(21, False)
         GPIO.output(20, True)
         counter1 = counter1 + 1
@@ -63,7 +63,8 @@ try:
             print("Actuator reach the desire distance")
         else:
             print("Actuator dont reach the desire distance")
-        time.sleep(4)            
+        time.sleep(4)
+        # print('waiting for next actuator number: ' + str(actuatorRelay3))
         GPIO.output(20, False)
         GPIO.output(26, True)
         counter2 = counter2 + 1
@@ -73,6 +74,7 @@ try:
         else:
             print("Actuator dont reach the desire distance")
         time.sleep(4)
+        # print('sleeping till next actuator 3 ' + str(actuatorRelay1))
         GPIO.output(26, False)
         time.sleep(4)
 
