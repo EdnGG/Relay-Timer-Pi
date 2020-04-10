@@ -34,7 +34,7 @@ formatDate = today.strftime("%A, %B, %d, %Y")
 # Getting name, email
 name = input("Technichian name: ")
 email = input(
-    "Please provide an e-mail where you woulld like to get the test report")
+    "Please provide an e-mail where you woulld like to get the test report: ")
 
 # Getting actuators serial numbers
 actuatorRelay1 = input("Provide the Actuator #  place on relay #1" + '\n')
@@ -49,22 +49,27 @@ try:
         counterCicles = counterCicles + 1
         print("Actuator number: " + str(actuatorRelay1) +
               " On relay 1. Cicle #:" + str(counter) + '\n')
-        time.sleep(40)
-        if GPIO.input(ButtonPin) == 0:
-            timesActuatorReachDistance = timesActuatorReachDistance + 1
-            print("Actuator reach the desire distance" + "\n")
-            print("Times actuator reached desire distance: " +
-                  str(timesActuatorReachDistance))
-        else:
-            print("Actuator dont reach the desire distance")
         time.sleep(10)
-        print('getting ready for next cicle')
-        GPIO.output(21, False)
+        if GPIO.input(ButtonPin) == 1:
+            timesActuatorReachDistance = timesActuatorReachDistance + 1
+            # print("Actuator reach the desire distance" + "\n")
+            print("Actuator has been reached desire distance: " +
+                  str(timesActuatorReachDistance) +" TIMES!!"+ "\n")
+        else:
+            print("Actuator has  been NOT REACH the desire distance" + "\n")
         time.sleep(5)
-
+        if counterCicles < 5:
+            print('getting ready for next cicle')
+            GPIO.output(21, False)
+            time.sleep(3)
+        else:
+            print("********* TEST HAS BEEN DONE SUCCESSFULLY!! ***********" + "\n")
+            GPIO.output(21, False)
+            time.sleep(3)
 
 finally:
     # cleanup the GPIO before finishing :)
     print("Actuator number "+str(actuatorRelay1) +
-          " On relay #1 runs: " + str(counter) + " Cicles")
+          " Place on relay #1 runs: " + str(counter) + " TIMES!!" + "\n")
+    print("Actuator # " + str(actuatorRelay1) + " Reach the distance: " +str(timesActuatorReachDistance)+ " TIMES!!") 
     GPIO.cleanup()
