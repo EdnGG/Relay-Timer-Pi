@@ -6,7 +6,7 @@ ButtonPin = 27
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(LedPin, GPIO.OUT, initial=GPIO.LOW)
-GPIO.setup(ButtonPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+GPIO.setup(ButtonPin, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
 
 try: 
     while True:

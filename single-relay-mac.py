@@ -1,4 +1,6 @@
 # import GPIO and time
+#from gpiozero import Button
+
 import RPi.GPIO as GPIO
 import time
 import datetime
@@ -6,6 +8,9 @@ import datetime
 #  LED and Switch Button
 LedPin = 17
 ButtonPin = 27
+
+#gpio.zero 
+#button = Button(27)
 
 # set GPIO numbering mode and define output pins
 GPIO.setmode(GPIO.BCM)
@@ -17,19 +22,17 @@ GPIO.setup(21, GPIO.OUT)
 # LED and Switch seccion
 GPIO.setup(LedPin, GPIO.OUT, initial=GPIO.HIGH)
 GPIO.setup(ButtonPin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+#GPIO.setup(27, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-
-# cycle those relays
 
 # adding 1 on each cicle
 counterCicles = 0
 counter = 0
 timesActuatorReachDistance = 0
 
-# Getting date
+# Getting actual date
 today = datetime.datetime.now()
 formatDate = today.strftime("%A, %B, %d, %Y")
-
 
 # Getting name, email
 name = input("Technichian name: ")
@@ -37,7 +40,7 @@ email = input(
     "Please provide an e-mail where you woulld like to get the test report: ")
 
 # Getting actuators serial numbers
-actuatorRelay1 = input("Provide the Actuator #  place on relay #1" + '\n')
+actuatorRelay1 = input("Provide the SERIAL NUMBER ACTUATOR, placed on relay #1" + '\n')
 
 print('\n' + "Welcome ",  name + '\n' + '\n' +
       "Today is: " + str(formatDate) + '\n' + '\n')
@@ -50,15 +53,15 @@ try:
         print("Actuator number: " + str(actuatorRelay1) +
               " On relay 1. Cicle #:" + str(counter) + '\n')
         time.sleep(10)
-        if GPIO.input(ButtonPin) == 1:
+        #if button.wait_for_press():
+        if GPIO.input(ButtonPin) == 0:
             timesActuatorReachDistance = timesActuatorReachDistance + 1
-            # print("Actuator reach the desire distance" + "\n")
-            print("Actuator has been reached desire distance: " +
+            print("Actuator HAS BEEN REACHED the desire distance: " +
                   str(timesActuatorReachDistance) +" TIMES!!"+ "\n")
         else:
-            print("Actuator has  been NOT REACH the desire distance" + "\n")
+            print("Actuator HAS NOT BEEN REACHED the desire distance" + "\n")
         time.sleep(5)
-        if counterCicles < 5:
+        if counterCicles <= 5:
             print('getting ready for next cicle')
             GPIO.output(21, False)
             time.sleep(3)
