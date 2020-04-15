@@ -2,6 +2,11 @@
 import RPi.GPIO as GPIO
 import time
 import datetime
+import sendgrid
+
+# Client email API Key
+client = sendgrid.SendGridClient("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")
+
 
 #  LED and Switch Button 
 LedPin = 17
@@ -65,3 +70,10 @@ finally:
     GPIO.cleanup()
 
 
+message = sendgrid.Mail()
+message.add_to("gresseden@gmail.com")
+message.set_from("gresseden@gmail.com")
+message.set_subject("TESTING SENDING EMAIL")
+message.set_html("Sending email with SENDGRID  and PYTHON")
+
+client.send(message)

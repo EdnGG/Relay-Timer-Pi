@@ -1,9 +1,14 @@
 # import GPIO and time
 #from gpiozero import Button
 
+import smtplib
 import RPi.GPIO as GPIO
 import time
 import datetime
+# import sendgrid
+
+# Client email API Key
+# client = sendgrid.SendGridClient("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")
 
 #  LED and Switch Button
 LedPin = 17
@@ -76,3 +81,14 @@ finally:
           " Place on relay #1 runs: " + str(counter) + " TIMES!!" + "\n")
     print("Actuator # " + str(actuatorRelay1) + " Reach the distance: " +str(timesActuatorReachDistance)+ " TIMES!!") 
     GPIO.cleanup()
+
+
+
+
+# message = sendgrid.Mail()
+# message.add_to("gresseden@gmail.com")
+# message.set_from("gresseden@gmail.com")
+# message.set_subject("TESTING SENDING EMAIL")
+# message.set_html("Sending email with SENDGRID  and PYTHON")
+# 
+# client.send(message)
