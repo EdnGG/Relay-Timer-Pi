@@ -3,9 +3,9 @@
 
 #################
 
-from email.MIMEMultipart import MIMEMultipart
+# from email.MIMEMultipart import MIMEMultipart
 
-from email.MIMEText import MIMEText
+# from email.MIMEText import MIMEText
 
 
 #################
@@ -72,7 +72,8 @@ try:
         counterCicles = counterCicles + 1
         print("Actuator number: " + str(actuatorRelay1) +
               " On relay 1. Cicle #:" + str(counter) + '\n')
-        time.sleep(10)
+#Below this line we need to adjust the time  
+        time.sleep(5)
         #if button.wait_for_press():
         if GPIO.input(ButtonPin) == 0:
             timesActuatorReachDistance = timesActuatorReachDistance + 1
@@ -92,55 +93,57 @@ try:
 
 finally:
     # cleanup the GPIO before finishing :)
-    print("Actuator number "+str(actuatorRelay1) +
-          " Place on relay #1 runs: " + str(counter) + " TIMES!!" + "\n")
-    print("Actuator # " + str(actuatorRelay1) + " Reach the distance: " +str(timesActuatorReachDistance)+ " TIMES!!") 
+
+    # print("Actuator number "+str(actuatorRelay1) +
+        #   " Place on relay #1 runs: " + str(counter) + " TIMES!!" + "\n")
+    
+    # print("Actuator # " + str(actuatorRelay1) + " Reach the distance: " +str(timesActuatorReachDistance)+ " TIMES!!") 
+    
+    
+    # GPIO.cleanup()
+
+    timesReachDistance = "Actuator # " + str(actuatorRelay1) + " Reach the distance: " +str(timesActuatorReachDistance)+ " TIMES!!" 
+
+    totalCicles = "Actuator number "+str(actuatorRelay1) + " Place on relay #1 runs: " + str(counter) + " TIMES!!" + "\n"
+
+    fullMessage = totalCicles + timesReachDistance
+
+    print(totalCicles)
+    print(timesReachDistance)
+
     GPIO.cleanup()
 
+    
+    message = 'hello from Raspberry Pi'
+    subject = 'Testing e-mail'
+
+    message = 'Subject: {}\n\n{}'.format(subject,fullMessage) 
+
+    # message = 'Subject: {}\n\n{}'.format(subject,message) 
+
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+
+    server.starttls()
+
+    server.login('gresseden@gmail.com', '!!!2885GogE')
+
+    server.sendmail('gresseden@gmail.com', 'gresseden@gmail.com ', message )
 
 
+    server.quit()
 
-# message = sendgrid.Mail()
-# message.add_to("gresseden@gmail.com")
-# message.set_from("gresseden@gmail.com")
-# message.set_subject("TESTING SENDING EMAIL")
-# message.set_html("Sending email with SENDGRID  and PYTHON")
-# 
-# client.send(message)
-
-
-
-
-fromaddr = "gresseden@gmail.com" # YOUR ADDRESS
-
-toaddr = "gresseden@gmail.com" #ADDRESS YOU WANT TO SEND TO
-
-msg = MIMEMultipart()
-
-msg['From'] = fromaddr
-
-msg['To'] = toaddr
-
-msg['Subject'] = "SUBJECT OF THE MAIL"
+    print('correo enviado successfull')
 
 
 
 
-body = "YOUR MESSAGE HERE"
-
-msg.attach(MIMEText(body, 'plain'))
 
 
 
 
-server = smtplib.SMTP('smtp.gmail.com', 587)
 
-server.starttls()
 
-server.login(fromaddr, "GogE2885!!")
 
-text = msg.as_string()
 
-server.sendmail(fromaddr, toaddr, text)
 
-server.quit()
+
