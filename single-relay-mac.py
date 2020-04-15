@@ -1,16 +1,6 @@
 # import GPIO and time
 #from gpiozero import Button
 
-#################
-
-# from email.MIMEMultipart import MIMEMultipart
-
-# from email.MIMEText import MIMEText
-
-
-#################
-
-
 import smtplib
 import RPi.GPIO as GPIO
 import time
@@ -21,15 +11,11 @@ import datetime
 # client = sendgrid.SendGridClient("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")
 
 
-
-
-
-
 #  LED and Switch Button
 LedPin = 17
 ButtonPin = 27
 
-#gpio.zero 
+# gpio.zero
 #button = Button(27)
 
 # set GPIO numbering mode and define output pins
@@ -60,7 +46,8 @@ email = input(
     "Please provide an e-mail where you woulld like to get the test report: ")
 
 # Getting actuators serial numbers
-actuatorRelay1 = input("Provide the SERIAL NUMBER ACTUATOR, placed on relay #1" + '\n')
+actuatorRelay1 = input(
+    "Provide the SERIAL NUMBER ACTUATOR, placed on relay #1" + '\n')
 
 print('\n' + "Welcome ",  name + '\n' + '\n' +
       "Today is: " + str(formatDate) + '\n' + '\n')
@@ -72,13 +59,13 @@ try:
         counterCicles = counterCicles + 1
         print("Actuator number: " + str(actuatorRelay1) +
               " On relay 1. Cicle #:" + str(counter) + '\n')
-#Below this line we need to adjust the time  
+# Below this line we need to adjust the time
         time.sleep(5)
-        #if button.wait_for_press():
+        # if button.wait_for_press():
         if GPIO.input(ButtonPin) == 0:
             timesActuatorReachDistance = timesActuatorReachDistance + 1
             print("Actuator HAS BEEN REACHED the desire distance: " +
-                  str(timesActuatorReachDistance) +" TIMES!!"+ "\n")
+                  str(timesActuatorReachDistance) + " TIMES!!" + "\n")
         else:
             print("Actuator HAS NOT BEEN REACHED the desire distance" + "\n")
         time.sleep(5)
@@ -94,32 +81,27 @@ try:
 finally:
     # cleanup the GPIO before finishing :)
 
-    # print("Actuator number "+str(actuatorRelay1) +
-        #   " Place on relay #1 runs: " + str(counter) + " TIMES!!" + "\n")
-    
-    # print("Actuator # " + str(actuatorRelay1) + " Reach the distance: " +str(timesActuatorReachDistance)+ " TIMES!!") 
-    
-    
-    # GPIO.cleanup()
+    timesReachDistance = "Actuator # " + \
+        str(actuatorRelay1) + " Reached the distance: " + \
+        str(timesActuatorReachDistance) + " TIMES!!"
 
-    timesReachDistance = "Actuator # " + str(actuatorRelay1) + " Reach the distance: " +str(timesActuatorReachDistance)+ " TIMES!!" 
+    totalCicles = "Actuator number " + \
+        str(actuatorRelay1) + " Placed on relay #1 ran: " + \
+        str(counter) + " TIMES!!" + "\n"
 
-    totalCicles = "Actuator number "+str(actuatorRelay1) + " Place on relay #1 runs: " + str(counter) + " TIMES!!" + "\n"
-
-    fullMessage = totalCicles + timesReachDistance
+    fullMessage = totalCicles + "\n\n" + timesReachDistance
 
     print(totalCicles)
     print(timesReachDistance)
 
     GPIO.cleanup()
 
-    
     message = 'hello from Raspberry Pi'
     subject = 'Testing e-mail'
 
-    message = 'Subject: {}\n\n{}'.format(subject,fullMessage) 
+    message = 'Subject: {}\n\n{}'.format(subject, fullMessage)
 
-    # message = 'Subject: {}\n\n{}'.format(subject,message) 
+    # message = 'Subject: {}\n\n{}'.format(subject,message)
 
     server = smtplib.SMTP('smtp.gmail.com', 587)
 
@@ -127,23 +109,8 @@ finally:
 
     server.login('gresseden@gmail.com', '!!!2885GogE')
 
-    server.sendmail('gresseden@gmail.com', 'gresseden@gmail.com ', message )
-
+    server.sendmail(email, 'gresseden@gmail.com ', message)
 
     server.quit()
 
     print('correo enviado successfull')
-
-
-
-
-
-
-
-
-
-
-
-
-
-
